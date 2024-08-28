@@ -37,7 +37,8 @@ def get_quotes() -> list[Quote]:
         if response.status_code == 404:
             break
         elif response.status_code != 200:
-            print(f"Error during page load {page_number}: {response.status_code}")
+            print(f"Error during page load {page_number}: "
+                  f"{response.status_code}")
             break
 
         soup = BeautifulSoup(response.content, "html.parser")
@@ -55,9 +56,9 @@ def get_quotes() -> list[Quote]:
 def save_quotes_to_csv(quotes: list[Quote], output_csv_path: str) -> None:
     with open(output_csv_path, mode="w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
-        writer.writerow(["Text", "Author", "Tags"])
+        writer.writerow(["text", "author", "tags"])
         for quote in quotes:
-            writer.writerow([quote.text, quote.author, ", ".join(quote.tags)])
+            writer.writerow([quote.text, quote.author, str(quote.tags)])
 
 
 def main(output_csv_path: str) -> None:
